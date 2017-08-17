@@ -4,6 +4,7 @@
 
 * avoids the rate limit problem
 * lets you put your muledump online without exposing your password
+* only exposes the data `muledump` needs
 
 ### Running Locally
 
