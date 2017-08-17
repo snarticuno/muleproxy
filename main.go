@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -40,7 +41,12 @@ func newServer(accounts []*account) *server {
 }
 
 func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	acct, ok := s.accounts[r.URL.Query().Get("guid")]
+	guid := r.URL.Query().Get("guid")
+	if strings.Contains(guid, "@") {
+		guid = fmt.Sprintf("%x", md5.Sum([]byte(guid)))
+	}
+
+	acct, ok := s.accounts[guid]
 	if !ok {
 		w.WriteHeader(404)
 		return
