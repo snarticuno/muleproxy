@@ -166,7 +166,21 @@ func main() {
 
 	s := newServer(accounts)
 
-	if err := http.ListenAndServe(":5353", s); err != nil {
+	wd, err := os.Getwd()
+	if err != nil {
+		fmt.Printf("where am i? %s\n", err)
+		os.Exit(1)
+	}
+
+	if _, err := os.Stat("muledump.html"); !os.IsNotExist(err) {
+		// Running from the muledump directory, serve the files too
+		http.Handle("/", http.FileServer(http.Dir(wd)))
+	}
+
+	http.Handle("/char/list", s)
+	http.Handle("/account/verifyage", s)
+
+	if err := http.ListenAndServe(":5353", nil); err != nil {
 		fmt.Printf("error starting server: %s\n", err)
 		os.Exit(1)
 	}
