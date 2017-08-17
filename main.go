@@ -185,6 +185,7 @@ func main() {
 
 	http.Handle("/char/list", s)
 	http.Handle("/account/verifyage", s)
+	http.Handle("/config.json", http.NotFoundHandler())
 
 	if err := http.ListenAndServe(":5353", nil); err != nil {
 		fmt.Printf("error starting server: %s\n", err)
