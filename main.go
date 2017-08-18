@@ -247,6 +247,7 @@ type Char struct {
 	HealthStackCount string `xml:"HealthStackCount"`
 	MagicStackCount  string `xml:"MagicStackCount"`
 	Dead             string `xml:"Dead"`
+	PCStats          string `xml:"PCStats"`
 	Account          struct {
 		Name string `xml:"Name"`
 	} `xml:"Account"`
